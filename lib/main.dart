@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onHorizontalSwipe(direction), //_onHorizontalSwipe,
         direction: (pageId == 0)
             ? DismissDirection.endToStart
-            : (pageId == _pages.length)
+            : (pageId == _pages.length - 1)
                 ? DismissDirection.startToEnd
                 : DismissDirection.horizontal,
         child: child,
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     } else {
       setState(() {
-        if (pageId < _pages.length) {
+        if (pageId < _pages.length - 1) {
           pageId += 1;
           dx = 1.2;
         } else {
