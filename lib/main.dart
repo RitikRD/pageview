@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'pages.dart';
+import 'pages.dart';
+import 'pages.dart';
 //import 'package:pageview/pages.dart';
 //import 'package:swipedetector/swipedetector.dart';
 
@@ -25,46 +29,104 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
+  static List<Widget> _pages = [
+    FirstPage(),
+    SecondPage(),
+    ThirdPage(),
+  ];
+  int pageId = 1;
+  double dx = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Card(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        top: 80.0,
-                        bottom: 80.0,
-                        left: 16.0,
-                        right: 16.0,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Swipe Me!',
-                            style: TextStyle(
-                              fontSize: 40.0,
-                            ),
-                          ),
+      body: buildHorizontalSwipeWrapper(
+        child: _pages[pageId],
+      ),
+      // Center(
+      //   child: Container(
+      //     child: Row(
+      //       children: <Widget>[
+      //         Expanded(
+      //           child: Card(
+      //             child: Container(
+      //               padding: EdgeInsets.only(
+      //                 top: 80.0,
+      //                 bottom: 80.0,
+      //                 left: 16.0,
+      //                 right: 16.0,
+      //               ),
+      //               child: Column(
+      //                 mainAxisSize: MainAxisSize.min,
+      //                 children: <Widget>[
+      //                   Text(
+      //                     'Swipe Me!',
+      //                     style: TextStyle(
+      //                       fontSize: 40.0,
+      //                     ),
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+    );
+  }
 
-                        ],
-                      ),
-                    ),
-                  ),
-
-                ),
-
-            ],
-          ),
-        ),
+  Widget buildHorizontalSwipeWrapper({
+    Widget child,
+  }) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 350),
+      switchInCurve: Curves.decelerate,
+      transitionBuilder: (child, animation) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: Offset(dx, 0),
+            end: Offset(0, 0),
+          ).animate(animation),
+          child: child,
+        );
+      },
+      layoutBuilder: (currentChild, _) => currentChild,
+      child: Dismissible(
+        key: ValueKey(pageId),
+        resizeDuration: null,
+        onDismissed: (DismissDirection direction) =>
+            onHorizontalSwipe(direction), //_onHorizontalSwipe,
+        direction: (pageId == 0)
+            ? DismissDirection.endToStart
+            : (pageId == _pages.length)
+                ? DismissDirection.startToEnd
+                : DismissDirection.horizontal,
+        child: child,
       ),
     );
+  }
+
+  void onHorizontalSwipe(DismissDirection direction) {
+    if (direction == DismissDirection.startToEnd) {
+      setState(() {
+        if (pageId > 0) {
+          pageId -= 1;
+          dx = -1.2;
+        } else {
+          dx = 0.0;
+        }
+      });
+    } else {
+      setState(() {
+        if (pageId < _pages.length) {
+          pageId += 1;
+          dx = 1.2;
+        } else {
+          dx = 0.0;
+        }
+      });
+    }
   }
 }
