@@ -94,6 +94,18 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       layoutBuilder: (currentChild, _) => currentChild,
       child: Dismissible(
+        background: Center(
+          child: Text(
+            'Primary',
+            style: TextStyle(fontSize: 36.0),
+          ),
+        ),
+        secondaryBackground: Center(
+          child: Text(
+            'Secondary',
+            style: TextStyle(fontSize: 36.0),
+          ),
+        ),
         key: ValueKey(pageId),
         resizeDuration: null,
         onDismissed: (DismissDirection direction) =>
@@ -113,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         if (pageId > 0) {
           pageId -= 1;
-          dx = -1.2;
+          dx = -1.1;
         } else {
           dx = 0.0;
         }
@@ -122,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         if (pageId < _pages.length - 1) {
           pageId += 1;
-          dx = 1.2;
+          dx = 1.1;
         } else {
           dx = 0.0;
         }

@@ -11,6 +11,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow,
       body: Center(
         child: Text(
           'First Page',
@@ -25,6 +26,7 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange,
       body: Center(
         child: Text(
           'Second Page',
@@ -39,6 +41,7 @@ class ThirdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green,
       body: Center(
         child: Text(
           'Third Page',
